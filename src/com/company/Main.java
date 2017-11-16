@@ -47,7 +47,7 @@ public class Main {
         int[][] tMinMatrix = new int[ tMinIndexRows.size( ) ][ T[ 0 ].length ];
         for (int i = 0; i < tMinIndexRows.size( ); i++) {
             for (int j = 0; j < T[ i ].length; j++) {
-                tMinMatrix[i][j]=T[tMinIndexRows.get( i )][j];
+                tMinMatrix[ i ][ j ] = T[ tMinIndexRows.get( i ) ][ j ];
             }
         }
         /*
@@ -59,30 +59,34 @@ public class Main {
         }*/
 
         //Составление КНФ
-        for ( int i = 0; i < tMinMatrix.length; i++ ) {
-            for ( int k = 0; k < tMinMatrix[0].length; k++ ) {
-                for ( int h = 1; h >= 0; h-- ) {
-                    for ( int j = 0; j < 4; j++ ) {
-                        T[i][j] = ( T1[k][j] ^ T2[h][j] );//mod2
-                    }i++;
+        for (int i = 0; i < tMinMatrix.length; i++) {
+            for (int k = 0; k < tMinMatrix[ 0 ].length; k++) {
+                for (int h = 0; h > tMinMatrix[ 0 ].length; h++) {
+                    for (int j = 0; j < tMinMatrix[ 0 ].length; j++) {
+                        //T[i][j] = ( T1[k][j] ^ T2[h][j] );//mod2
+                    }
+                    i++;
                 }
             }
         }
 
         List<String> Tt = new ArrayList<>( );
-        Tt.add( "413" );
-        Tt.add( "123" );
-        Tt.add( "123" );
-        Tt.add( "456" );
+        Tt.add( "13" );
+        Tt.add( "31" );
+        Tt.add( "0" );
+        Tt.add( "0" );
+        Tt.add( "0" );
+
+        Tt.removeIf( p -> p.equals( "0" ) );
         Set<String> s = new HashSet<>( Tt );
-
-
-
+        for (String item : Tt) {
+            System.out.println( item );
+        }
         //Получение p
         ArrayList<String> DNF = new ArrayList<>( );
         DNF.add( "12" );
 
-        //Tt.removeIf( p -> p.equals( " " ) );
+        //
        /* int k = 1;
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
