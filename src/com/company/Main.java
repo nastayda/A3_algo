@@ -24,37 +24,56 @@ public class Main {
                 //Предварительный массив КНФ
                 ArrayList <Integer> massKNF = generateMassWithKNF(tMinMatrix);
                 //Обработка массива КНФ
-                printMassInt(massKNF);
+                //printMassInt(massKNF);
 
                 //Убрать повторяющиеся символы
                 ArrayList <Integer> massKNFDeleteDoublesInItems = new ArrayList <>();
                 for (int i = 0; i < massKNF.size(); i++) {
                         massKNFDeleteDoublesInItems.add(Integer.parseInt(deleteDoublesSymbolsSec(massKNF.get(i).toString())));
                 }
-                printMassInt(massKNFDeleteDoublesInItems);
+                //printMassInt(massKNFDeleteDoublesInItems);
 
                 //Set <Integer> massKNFDeleteDoublesFromList = new HashSet <>(massKNFDeleteDoublesInItems);
 
                 //Убрать дубликаты
                 ArrayList <Integer> massKNFPreResult = deleteDuplicatesFromKNF(massKNFDeleteDoublesInItems);
-                printMassInt(massKNFPreResult);
-                ArrayList <String> massKNFResult = new ArrayList <>();
+                //printMassInt(massKNFPreResult);
+                ArrayList <Integer> massKNFResult = deleteRepeatedElements(massKNFPreResult);
+                ArrayList <Integer> massKNFResult1 = deleteRepeatedElements(massKNFResult);
+                ArrayList <Integer> massKNFResult2 = deleteRepeatedElements(massKNFResult1);
+                //ArrayList <Integer> massKNFResult3 = deleteRepeatedElements(massKNFResult2);
+                ArrayList <String> mKNFString = new ArrayList <>();
+                for (int item : massKNFResult) {
+                        mKNFString.add(Integer.toString(item));
+                }
+                printMassString(mKNFString);
+                test();
+                //ArrayList <String> massKNFResult1 = deleteRepeatedElements(new ArrayList <Integer>(massKNFResult));
+                //Set <String> massKNFDeleteDoublesFromList1 = new HashSet <>(massKNFResult);
+                //Set <String> massKNFDeleteDoublesFromList2 = new HashSet <>(massKNFResult1);
+                // printMassInt(massKNFResult);
+        }
 
+        public static ArrayList <Integer> deleteRepeatedElements(ArrayList <Integer> massKNFPreResult) {
+                ArrayList <Integer> massKNFResult = new ArrayList <>();
                 for (int i = 0; i < massKNFPreResult.size(); i++) {
                         String item = massKNFPreResult.get(i).toString();
                         for (int j = 0; j < massKNFPreResult.size(); j++) {
                                 String itemForCompare = massKNFPreResult.get(j).toString();
-                                if (i!=j){
-                                        if (itemForCompare.contains(item)){
-                                                massKNFResult.add(item);
+                                if (i != j) {
+                                        if (itemForCompare.contains(item)) {
+                                                if (!massKNFResult.contains(Integer.parseInt(item))) {
+                                                        massKNFResult.add(Integer.parseInt(item));
+                                                }
                                         }
                                 }
                         }
                 }
-                Set <String> massKNFDeleteDoublesFromList1 = new HashSet <>(massKNFResult);
-                printMassString(new ArrayList <>(massKNFDeleteDoublesFromList1));
-                printMassInt(massKNFPreResult);
-
+                //ArrayList <Integer> massKNFResultNew = new ArrayList <>(massKNFResult);
+                //massKNFResult.clear();
+                //deleteRepeatedElements(massKNFResultNew);
+                // massKNFResultNew.clear();
+                return massKNFResult;
         }
 
         private static ArrayList <Integer> deleteDuplicatesFromKNF(ArrayList <Integer> massKNFDeleteDoublesInItems) {
@@ -111,22 +130,28 @@ public class Main {
                 System.out.println(str.replaceAll("(?i)[" + duplicates + "]", ""));
         }
 
-        private static void test(ArrayList <Integer> massKNF) {
+        private static void test() {
                 List <String> Tt = new ArrayList <>();
-                Tt.add("13");
+                Tt.add("123");
                 Tt.add("31");
+                Tt.add("12");
+                Tt.add("12");
+                Tt.add("67");
                 Tt.add("0");
-                Tt.add("0");
-                Tt.add("0");
-
-                Tt.removeIf(p -> p.equals("0"));
-                Set <Integer> s = new HashSet <Integer>(massKNF);
+                for (int j = 0; j < Tt.size(); j++) {
+                        String item = Tt.get(j);
+                        Tt.removeIf(p -> p.contains(item.toString()) && p.length() > item.toString().length());
+                }
+                for (String key : Tt) {
+                        System.out.print(key + " ");
+                }
+                /*Set <Integer> s = new HashSet <Integer>(massKNF);
                 for (Integer key : s) {
-                        //System.out.print( key + " " );
+                        System.out.print( key + " " );
                 }
                 //Получение p
                 ArrayList <String> DNF = new ArrayList <>();
-                DNF.add("12");
+                DNF.add("12");*/
         }
 
         private static int[][] addRowsToMinMass(int[][] t, ArrayList <Integer> tMinIndexRows) {
