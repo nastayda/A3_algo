@@ -11,10 +11,21 @@ public class Main {
     public static void main( String[] args ) {
         int[][] T1 = { { 1, 1, 0, 1 },
                 { 0, 0, 0, 1 } };
-        
+        System.out.println( "Mатрица Т1" );
+        System.out.println( "------------------" );
+        printMatrixInt( T1 );
+        System.out.println( "------------------" );
         int[][] T2 = { { 1, 0, 1, 0 },
                 { 0, 1, 1, 0 } };
+        System.out.println( "Mатрица Т2" );
+        System.out.println( "------------------" );
+        printMatrixInt( T2 );
+        System.out.println( "------------------" );
         int[] X = { 0, 1, 0, 1 };
+        System.out.println( "Х" );
+        System.out.println( "------------------" );
+        printMatrixInt( X );
+        System.out.println( "------------------" );
         System.out.println( "УНИВЕРСАЛЬНЫЙ АЛГОРИТМ НАХОЖДЕНИЯ ТУПИКОВЫХ ТЕСТОВ" );
         System.out.println( "------------------" );
         //Универсальный алгоритм нахождения тупиковых тестов
@@ -164,6 +175,13 @@ public class Main {
             }
             System.out.println( );
         }
+    }
+
+    public static void printMatrixInt( int[] t ) {
+        for (int h = 0; h < t.length; h++) {
+            System.out.print( t[ h ] + " " );
+        }
+        System.out.println( );
     }
 
     private static double findMaxMin( double[] vals, String defineVar ) {
