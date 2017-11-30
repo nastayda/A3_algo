@@ -11,10 +11,11 @@ public class Main {
     public static void main( String[] args ) {
         int[][] T1 = { { 1, 1, 0, 1 },
                 { 0, 0, 0, 1 } };
+        
         int[][] T2 = { { 1, 0, 1, 0 },
                 { 0, 1, 1, 0 } };
         int[] X = { 0, 1, 0, 1 };
-        System.out.println( "Универсальный алгоритм нахождения тупиковых тестов" );
+        System.out.println( "УНИВЕРСАЛЬНЫЙ АЛГОРИТМ НАХОЖДЕНИЯ ТУПИКОВЫХ ТЕСТОВ" );
         System.out.println( "------------------" );
         //Универсальный алгоритм нахождения тупиковых тестов
         //ШАГ 1 - XOR------------------
@@ -40,11 +41,18 @@ public class Main {
             mDNFString.add( Integer.toString( item ) );
         }
         deleteSameDNFElements( mDNFString );
+        deleteSameDNFElements( mDNFString );
+        System.out.println( "ШАГ 3 - Тупиковые тесты" );
+        System.out.println( "-----------------" );
+        printMassString( mDNFString );
+        System.out.println( "-----------------" );
+        System.out.println( "АЛГОРИТМ А3" );
+        System.out.println( "------------------" );
         //АЛГОРИТМ А3------------------
         //Для подсчета весов
         Map<Character, Integer> countChar = getCharacterIntegerMap( mDNFString );
         //Посчитать веса
-        ArrayList<Double> p = countWeghts( countChar );
+        ArrayList<Double> p = countWeghts( countChar, mDNFString );
 
         double z = 0.0;
         z = getZ( T1, T2, p );
@@ -57,16 +65,30 @@ public class Main {
                     T1[ i ][ k ] = 1;
                 } else T1[ i ][ k ] = 0;
             }
+            for (int i = 0; i < T2.length; i++) {
+                if (T2[ i ][ k ] == 0) {
+                    T2[ i ][ k ] = 1;
+                } else T2[ i ][ k ] = 0;
+            }
             z = getZ( T1, T2, p );
             k++;
         }
         // double h = 0.5*(findMaxMin( AlphaMin, "max" )-findMaxMin( Alphas, "min" ));
         double h = 0.5 * z;
+        System.out.printf( "Вычисляем h %s", h );
+        System.out.println( );
+        System.out.println( "------------------" );
         double xp = 0;
         for (int i = 0; i < p.size( ); i++) {
             xp += p.get( i ) * X[ i ];
         }
-
+        System.out.printf( "Вычисляем xp %s", h );
+        ;
+        System.out.println( );
+        System.out.println( "------------------" );
+        if (xp > h) {
+            System.out.println( "Х принадлежит классу К1" );
+        } else System.out.println( "Х принадлежит классу К2" );
     }
 
     public static double getZ( int[][] t1, int[][] t2, ArrayList<Double> p ) {
@@ -85,10 +107,15 @@ public class Main {
         return z;
     }
 
-    public static ArrayList<Double> countWeghts( Map<Character, Integer> countChar ) {
+    public static ArrayList<Double> countWeghts( Map<Character, Integer> countChar, ArrayList<String> mDNFString ) {
         ArrayList<Double> p = new ArrayList<>( );
+        ArrayList<Integer> pPre = new ArrayList<>( );
+
         for (Integer item : countChar.values( )) {
-            p.add( (double) item / ( countChar.values( ).size( ) ) );
+            pPre.add( item );
+        }
+        for (int i = 0; i < mDNFString.size( ); i++) {
+            p.add( (double) pPre.get( i ) / ( mDNFString.size( ) ) );
         }
         System.out.println( "Веса" );
         System.out.println( "------------------" );
@@ -257,10 +284,6 @@ public class Main {
             String item = massKNF.get( j );
             massKNF.removeIf( p -> p.contains( item.toString( ) ) && p.length( ) > item.toString( ).length( ) );
         }
-        System.out.println( "Тупиковые тесты" );
-        System.out.println( "-----------------" );
-        printMassString( massKNF );
-        System.out.println( "-----------------" );
     }
 
     private static int[][] addRowsToMinMass( int[][] t, ArrayList<Integer> tMinIndexRows ) {
